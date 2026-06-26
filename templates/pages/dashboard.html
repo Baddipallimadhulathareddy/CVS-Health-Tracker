@@ -1,0 +1,724 @@
+<style>
+
+.grid{
+display:grid;
+grid-template-columns:380px 1fr 1fr;
+grid-template-rows:145px 145px;
+gap:12px;
+align-items:start;
+}
+.card{
+background:#0b1220;
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:22px;
+position:relative;
+overflow:hidden;
+box-shadow:0 8px 25px rgba(0,0,0,.25);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-3px);
+border-color:rgba(0,229,255,.18);
+}
+
+.risk-card{
+grid-row:1 / span 2;
+height:302px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:24px;
+}
+.risk-index{
+position:absolute;
+top:16px;
+right:18px;
+font-size:10px;
+letter-spacing:1px;
+padding:6px 10px;
+border-radius:30px;
+background:#0f2034;
+color:#5dd7ff;
+}
+
+.risk-circle{
+width:86px;
+height:86px;
+border-radius:50%;
+border:6px solid #263243;
+display:flex;
+justify-content:center;
+align-items:center;
+margin:10px 0 16px;
+}
+.risk-inner{
+width:72px;
+height:72px;
+background:#111827;
+border-radius:50%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.risk-inner h2{
+font-size:18px;
+font-weight:800;
+line-height:1;
+}
+
+.risk-inner span{
+font-size:11px;
+letter-spacing:2px;
+color:#7b8aa0;
+margin-top:4px;
+}
+
+.risk-status{
+width:100%;
+text-align:center;
+padding:9px;
+border-radius:8px;
+background:#0d4136;
+color:#24d3a4;
+font-size:11px;
+font-weight:700;
+margin:10px 0;
+}
+
+.risk-desc{
+font-size:12px;
+line-height:1.6;
+color:#8fa4bc;
+text-align:center;
+}
+
+.metric-card{
+height:145px;
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+padding:18px;
+}
+
+.metric-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.metric-left{
+display:flex;
+align-items:center;
+gap:6px;
+font-size:11px;
+letter-spacing:3px;
+color:#7988a4;
+text-transform:uppercase;
+}
+
+.metric-icon{
+width:28px;
+height:28px;
+border-radius:8px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:13px;
+}
+
+.icon-blue{
+background:#06283d;
+color:#00d4ff;
+}
+
+.icon-red{
+background:#3d1222;
+color:#ff5d7b;
+}
+
+.icon-yellow{
+background:#3d2b09;
+color:#ffc94a;
+}
+
+.icon-purple{
+background:#28153e;
+color:#ba7cff;
+}
+
+.metric-value{
+font-size:22px;
+font-weight:800;
+margin:8px 0;
+display:flex;
+align-items:flex-end;
+gap:4px;
+}
+
+.metric-unit{
+font-size:12px;
+color:#7b8aa0;
+margin-left:4px;
+}
+
+.metric-line{
+height:1px;
+background:#202938;
+margin:10px 0;
+}
+
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:8px;
+font-size:11px;
+font-weight:700;
+margin-right:10px;
+}
+
+.badge-green{
+background:#0b3c33;
+color:#22d3a6;
+}
+
+.badge-red{
+background:#3d1222;
+color:#ff5d7b;
+}
+
+.badge-yellow{
+background:#3d2b09;
+color:#ffc94a;
+}
+
+.badge-purple{
+background:#28153e;
+color:#ba7cff;
+}
+
+.metric-desc{
+font-size:11px;
+color:#7b8aa0;
+}
+
+.section-title{
+margin-top:28px;
+margin-bottom:18px;
+font-size:20px;
+font-weight:700;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.section-title span{
+color:#00d4ff;
+}
+
+.recommendations{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+
+.rec-card{
+background:#0b1220;
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:20px;
+position:relative;
+overflow:hidden;
+min-height:180px;
+transition:.3s;
+}
+
+.rec-card:hover{
+transform:translateY(-4px);
+border-color:rgba(0,229,255,.18);
+}
+
+.rec-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.rec-icon{
+font-size:22px;
+}
+
+.tag{
+padding:6px 12px;
+border-radius:8px;
+font-size:11px;
+font-weight:700;
+letter-spacing:1px;
+}
+
+.blue{
+background:#08364d;
+color:#00d4ff;
+}
+
+.orange{
+background:#4c3009;
+color:#ffae42;
+}
+
+.green-tag{
+background:#0b3c33;
+color:#22d3a6;
+}
+
+.red-tag{
+background:#42131d;
+color:#ff6480;
+}
+
+.purple-tag{
+background:#2f1648;
+color:#ba7cff;
+}
+
+.rec-card h3{
+font-size:18px;
+margin-bottom:10px;
+}
+
+.rec-card p{
+font-size:13px;
+line-height:1.7;
+color:#8fa4bc;
+}
+
+.rec-footer{
+position:absolute;
+left:20px;
+right:20px;
+bottom:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-size:11px;
+color:#6f8198;
+}
+
+.action{
+color:#00d4ff;
+font-weight:600;
+}
+
+.empty{
+margin-top:25px;
+height:220px;
+display:flex;
+justify-content:center;
+align-items:center;
+border:1px dashed rgba(255,255,255,.08);
+border-radius:18px;
+background:#0b1220;
+font-size:18px;
+color:#7b8aa0;
+}
+
+</style>
+
+<div class="grid">
+
+<div class="card risk-card">
+
+<div class="risk-index">
+🎯 RISK INDEX
+</div>
+
+<div class="risk-circle">
+
+<div class="risk-inner">
+<h2>{{ data.risk_score }}%</h2>
+<span>SCORE</span>
+</div>
+
+</div>
+
+<div class="risk-status">
+{{ data.risk_level if data else 'NO DATA' }} RISK DETECTED
+</div>
+
+<div class="risk-desc">
+
+{% if data.risk_level == "LOW" %}
+Excellent. Your current ocular strain metrics remain within safe operating limits.
+
+{% elif data.risk_level == "MEDIUM" %}
+Moderate eye strain detected. Take frequent breaks, blink more often, and reduce continuous screen exposure.
+
+{% elif data.risk_level == "HIGH" %}
+High eye strain detected. Immediate eye care and reduced screen exposure are strongly recommended.
+
+{% else %}
+No scan available.
+{% endif %}
+
+</div>
+
+</div>
+
+<div class="card metric-card">
+
+<div class="metric-head">
+
+<div class="metric-left">
+👁 BLINK RATE
+</div>
+
+<div class="metric-icon icon-blue">
+👁
+</div>
+
+</div>
+
+<div class="metric-value">
+{{ data.blink_rate if data else 0 }}
+<span class="metric-unit">blink/min</span>
+</div>
+
+<div class="metric-line"></div>
+
+<div>
+{% if data.blink_rate >= 12 and data.blink_rate <= 20 %}
+
+<span class="badge badge-green">
+Healthy Rate
+</span>
+
+{% elif data.blink_rate < 12 %}
+
+<span class="badge badge-red">
+Low Blink Rate
+</span>
+
+{% else %}
+
+<span class="badge badge-yellow">
+High Blink Rate
+</span>
+
+{% endif %}
+<span class="metric-desc">
+
+{% if data.blink_rate < 12 %}
+Blink rate is below the normal range.
+
+{% elif data.blink_rate >= 12 and data.blink_rate <= 20 %}
+Blink rate is within the healthy range.
+
+{% else %}
+Blink rate is above the normal range.
+
+{% endif %}
+
+</span>
+</div>
+
+</div>
+
+<div class="card metric-card">
+
+<div class="metric-head">
+
+<div class="metric-left">
+🔴 EYE REDNESS
+</div>
+
+<div class="metric-icon icon-red">
+🩸
+</div>
+
+</div>
+
+<div class="metric-value">
+{{ data.redness if data else '0' }}
+</div>
+
+<div class="metric-line"></div>
+
+<div>
+
+{% if data.redness == "Normal" %}
+
+<span class="badge badge-green">
+Normal Status
+</span>
+
+{% elif data.redness == "Mild" %}
+
+<span class="badge badge-yellow">
+Mild Redness
+</span>
+
+{% elif data.redness == "Moderate" %}
+
+<span class="badge badge-yellow">
+Moderate Redness
+</span>
+
+{% elif data.redness == "Critical" %}
+
+<span class="badge badge-red">
+Critical Redness
+</span>
+
+{% endif %}
+
+<span class="metric-desc">
+Corresponds to vessel inflammation.
+</span>
+
+</div>
+
+</div>
+
+<div class="card metric-card">
+
+<div class="metric-head">
+
+<div class="metric-left">
+🙂 EYE SQUEEZING
+</div>
+
+<div class="metric-icon icon-purple">
+⚠️
+</div>
+
+</div>
+
+<div class="metric-value">
+{{ data.squeezing if data else 0 }}
+</div>
+
+<div class="metric-line"></div>
+
+<div>
+
+{% if data.squeezing == 0 %}
+
+<span class="badge badge-green">
+Relaxed Muscles
+</span>
+
+{% else %}
+
+<span class="badge badge-red">
+Eye Strain Detected
+</span>
+
+{% endif %}
+
+<span class="metric-desc">
+Tracks orbital muscle load.
+</span>
+
+</div>
+
+</div>
+
+<div class="card metric-card">
+
+<div class="metric-head">
+
+<div class="metric-left">
+👆 EYE ITCHING
+</div>
+
+<div class="metric-icon icon-yellow">
+🔥
+</div>
+
+</div>
+
+<div class="metric-value">
+{{ data.itching if data else 0 }}
+</div>
+
+<div class="metric-line"></div>
+
+<div>
+
+{% if data.itching == 0 %}
+
+<span class="badge badge-green">
+No Rub Gestures
+</span>
+
+{% else %}
+
+<span class="badge badge-red">
+Eye Rubbing Detected
+</span>
+
+{% endif %}
+
+<span class="metric-desc">
+Detects frequent eyelid touch motions.
+</span>
+
+</div>
+
+</div>
+
+</div>
+{% if data.recommendations %}
+
+<h2 class="section-title">
+<span>🩺</span>
+Personalized AI Recommendations
+</h2>
+
+<div class="recommendations">
+
+<div class="rec-card">
+
+<div class="rec-top">
+<div class="rec-icon">💧</div>
+<div class="tag blue">HYDRATION</div>
+</div>
+
+<h3>Drink More Water</h3>
+
+<p>
+{{ data.recommendations }}
+</p>
+
+<div class="rec-footer">
+<span>⚠ HIGH PRIORITY</span>
+<span class="action">Action Required</span>
+</div>
+
+</div>
+
+<div class="rec-card">
+
+<div class="rec-top">
+<div class="rec-icon">🥕</div>
+<div class="tag orange">NUTRITION</div>
+</div>
+
+<h3>Eat Carrots</h3>
+
+<p>
+High Vitamin A & Beta-Carotene supports overall retinal health.
+</p>
+
+<div class="rec-footer">
+<span>STANDARD ROUTINE</span>
+</div>
+
+</div>
+
+<div class="rec-card">
+
+<div class="rec-top">
+<div class="rec-icon">🥬</div>
+<div class="tag green-tag">NUTRITION</div>
+</div>
+
+<h3>Eat Green Veggies</h3>
+
+<p>
+Lutein & Zeaxanthin protect against blue-light strain and improve eye health.
+</p>
+
+<div class="rec-footer">
+<span>STANDARD ROUTINE</span>
+</div>
+
+</div>
+
+<div class="rec-card">
+
+<div class="rec-top">
+<div class="rec-icon">👓</div>
+<div class="tag purple-tag">THERAPY</div>
+</div>
+
+<h3>Follow 20-20-20 Rule</h3>
+
+<p>
+Every 20 minutes look 20 feet away for at least 20 seconds.
+</p>
+
+<div class="rec-footer">
+<span>STANDARD ROUTINE</span>
+</div>
+
+</div>
+
+<div class="rec-card">
+
+<div class="rec-top">
+<div class="rec-icon">📵</div>
+<div class="tag red-tag">PREVENTION</div>
+</div>
+
+<h3>Reduce Screen Time</h3>
+
+<p>
+Cut back excessive screen exposure to restore tear-film stability.
+</p>
+
+<div class="rec-footer">
+<span>STANDARD ROUTINE</span>
+</div>
+
+</div>
+
+<div class="rec-card">
+
+<div class="rec-top">
+<div class="rec-icon">😴</div>
+<div class="tag purple-tag">REST</div>
+</div>
+
+<h3>Rest Your Eyes</h3>
+
+<p>
+Perform a 5-minute visual relaxation exercise every hour.
+</p>
+
+<div class="rec-footer">
+<span>STANDARD ROUTINE</span>
+</div>
+
+</div>
+
+</div>
+
+{% else %}
+
+<div class="empty">
+
+<div style="text-align:center;">
+
+<h2 style="margin-bottom:12px;">
+👁 Scan Not Completed
+</h2>
+
+<p style="color:#8fa4bc;font-size:15px;line-height:1.8;">
+Your dashboard is waiting for the first AI Eye Scan.<br><br>
+All metrics remain <b>0</b> until a scan is completed.<br><br>
+Click <b>"Begin Live AI Scan"</b> from the top-right corner to start the diagnosis.
+</p>
+
+</div>
+
+</div>
+
+{% endif %}
+

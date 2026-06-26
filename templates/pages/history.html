@@ -1,0 +1,141 @@
+<style>
+
+.history-title{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+.history-card{
+    background:#07111f;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.history-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.history-table thead{
+    background:#0b1830;
+}
+
+.history-table th{
+    padding:18px;
+    color:#00d4ff;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    text-align:center;
+}
+
+.history-table td{
+    padding:18px;
+    text-align:center;
+    color:#d7e3f4;
+    border-top:1px solid rgba(255,255,255,.05);
+}
+
+.history-table tbody tr:hover{
+    background:#0b1220;
+}
+
+.low{
+    color:#22c55e;
+    font-weight:700;
+}
+
+.medium{
+    color:#facc15;
+    font-weight:700;
+}
+
+.high{
+    color:#ef4444;
+    font-weight:700;
+}
+
+.empty{
+    padding:50px;
+    text-align:center;
+    color:#8fa4bc;
+    font-size:18px;
+}
+
+</style>
+
+<h2 class="history-title">
+📋 Report History
+</h2>
+
+<div class="history-card">
+
+{% if reports %}
+
+<table class="history-table">
+
+<thead>
+
+<tr>
+<th>Date</th>
+<th>Blink</th>
+<th>Redness</th>
+<th>Squeezing</th>
+<th>Itching</th>
+<th>Score</th>
+<th>Risk</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for report in reports %}
+
+<tr>
+
+<td>{{ report[0] }}</td>
+
+<td>{{ report[1] }}</td>
+
+<td>{{ report[2] }}</td>
+
+<td>{{ report[3] }}</td>
+
+<td>{{ report[4] }}</td>
+
+<td>{{ report[5] }}%</td>
+
+<td>
+<span class="
+{% if report[6]=='LOW' %}
+low
+{% elif report[6]=='MEDIUM' %}
+medium
+{% else %}
+high
+{% endif %}
+">
+{{ report[6] }}
+</span>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+
+<div class="empty">
+No Reports Found
+</div>
+
+{% endif %}
+
+</div>

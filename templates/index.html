@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVS Health Tracker AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#020617;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Background */
+
+body::before{
+    content:'';
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    background:
+    linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px);
+    background-size:60px 60px;
+    z-index:-2;
+}
+
+body::after{
+    content:'';
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:
+    radial-gradient(circle at 20% 20%, rgba(0,255,255,.12), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(128,0,255,.15), transparent 40%);
+    z-index:-1;
+}
+
+/* Navbar */
+
+nav{
+    width:100%;
+    height:80px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 8%;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:700;
+    font-size:20px;
+}
+
+.logo-box{
+    width:38px;
+    height:38px;
+    border:1px solid #00e5ff;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#00e5ff;
+}
+
+.logo span{
+    color:#00e5ff;
+}
+
+.menu{
+    display:flex;
+    gap:50px;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#8f9db4;
+    font-size:14px;
+}
+
+.auth{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.signin{
+    color:#a8b4c7;
+    text-decoration:none;
+}
+
+.register{
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:30px;
+    background:linear-gradient(90deg,#0066ff,#00cfff);
+    color:white;
+    font-weight:600;
+}
+
+/* Hero */
+
+.hero{
+    width:100%;
+    min-height:90vh;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:80px 8%;
+}
+
+.left{
+    width:50%;
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:25px;
+    border:1px solid rgba(0,255,255,.2);
+    color:#00e5ff;
+    font-size:12px;
+    margin-bottom:30px;
+}
+
+.left h1{
+    font-size:70px;
+    font-weight:800;
+    line-height:1.1;
+}
+
+.left h1 span{
+    color:#0ea5ff;
+}
+
+.left p{
+    color:#8191a8;
+    margin-top:25px;
+    line-height:1.9;
+    font-size:19px;
+    max-width:650px;
+}
+
+.buttons{
+    display:flex;
+    gap:20px;
+    margin-top:40px;
+}
+
+.btn1{
+    background:linear-gradient(90deg,#0066ff,#a100ff);
+    padding:16px 35px;
+    border-radius:16px;
+    text-decoration:none;
+    color:white;
+    font-weight:600;
+}
+
+.btn2{
+    background:#08111f;
+    border:1px solid rgba(255,255,255,.08);
+    padding:16px 35px;
+    border-radius:16px;
+    text-decoration:none;
+    color:white;
+}
+
+.features{
+    display:flex;
+    gap:40px;
+    margin-top:40px;
+    color:#6ee7b7;
+    font-size:14px;
+}
+
+/* Right Eye Card */
+
+.right{
+    width:45%;
+    display:flex;
+    justify-content:center;
+}
+
+.eye-card{
+    width:450px;
+    height:450px;
+    border-radius:25px;
+    border:1px solid rgba(0,255,255,.15);
+    background:#050d1c;
+    position:relative;
+    overflow:hidden;
+    box-shadow:
+    0 0 50px rgba(0,255,255,.08),
+    0 0 120px rgba(128,0,255,.08);
+
+    isolation:isolate;
+}
+
+.eye-card::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(
+        circle,
+        rgba(0,255,255,.05),
+        rgba(124,58,237,.08),
+        transparent
+    );
+}
+
+.eye-card::after{
+    display:none;
+}
+.eye-image{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    object-fit:contain;
+    padding:10px;
+    z-index:1;
+}
+.scan{
+    position:absolute;
+    left:0;
+    width:100%;
+    height:5px;
+    background:#00ffff;
+    box-shadow:
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 40px #00ffff;
+
+    animation:scan 3s linear infinite;
+
+    z-index:999;
+}
+
+@keyframes scan{
+    0%{
+        top:0;
+    }
+    100%{
+        top:100%;
+    }
+}
+
+/* Stats */
+
+.stats{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    text-align:center;
+    padding:50px 8%;
+}
+
+.stats h2{
+    font-size:60px;
+    color:#cbd5e1;
+}
+
+.stats p{
+    color:#6b7280;
+    margin-top:10px;
+}
+
+/* Section */
+
+.section{
+    padding:120px 8%;
+}
+
+.section-title{
+    text-align:center;
+}
+
+.section-title small{
+    color:#00e5ff;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    margin-top:20px;
+    font-size:48px;
+}
+
+.section-title p{
+    color:#7b8aa0;
+    max-width:800px;
+    margin:auto;
+    margin-top:20px;
+    line-height:1.8;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+    margin-top:70px;
+}
+
+.card{
+    background:#08111f;
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:20px;
+    padding:35px;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#00e5ff;
+}
+
+.icon{
+    width:55px;
+    height:55px;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:25px;
+    font-size:20px;
+}
+
+.i1{background:rgba(0,255,255,.1);color:#00e5ff;}
+.i2{background:rgba(168,85,247,.1);color:#a855f7;}
+.i3{background:rgba(34,197,94,.1);color:#22c55e;}
+.i4{background:rgba(255,193,7,.1);color:#ffc107;}
+
+.card h3{
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#8a97ab;
+    line-height:1.7;
+}
+
+@media(max-width:1000px){
+
+.hero{
+flex-direction:column;
+text-align:center;
+}
+
+
+.scan{
+    position:absolute;
+    left:0;
+    width:100%;
+    height:5px;
+    background:#00ffff;
+
+    box-shadow:
+    0 0 10px #00ffff,
+    0 0 20px #00ffff,
+    0 0 40px #00ffff,
+    0 0 60px #00ffff;
+
+    animation:scan 3s linear infinite;
+
+    z-index:9999;
+}
+.left,.right{
+width:100%;
+}
+
+.left h1{
+font-size:45px;
+}
+
+.cards{
+grid-template-columns:1fr;
+}
+
+.stats{
+grid-template-columns:1fr;
+gap:40px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+<div class="logo-box">
+<i class="fa-solid fa-eye"></i>
+</div>
+CVS Health <span>Tracker AI</span>
+</div>
+
+<div class="menu">
+
+</div>
+
+<div class="auth">
+<a href="/login" class="signin">Sign In</a>
+<a href="/signup" class="register">Register Free →</a>
+</div>
+
+</nav>
+
+<section class="hero">
+
+<div class="left">
+
+<div class="badge">
+🏆 FINAL YEAR PROJECT • AWARD WINNING AI UI
+</div>
+
+<h1>
+AI-Powered <br>
+<span>CVS Health Tracker</span>
+</h1>
+
+<p>
+Protect your eyes. Monitor your digital health.
+Our advanced computer vision engine detects blink rate,
+squeezing, eye strain and CVS symptoms automatically.
+</p>
+
+<div class="buttons">
+<a href="/signup" class="btn1">Get Started →</a>
+<a href="#" class="btn2">Learn Technology</a>
+</div>
+
+<div class="features">
+<div>✔ No Extra Hardware</div>
+<div>✔ 100% Client-Side Scan</div>
+<div>✔ Intelligent Alerts</div>
+</div>
+
+</div>
+
+<div class="right">
+
+<div class="eye-card">
+
+<img src="/static/eye-tech.png" class="eye-image" alt="">
+
+<div class="scan"></div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="stats">
+
+<div>
+<h2>70%</h2>
+<p>Of digital screen users experience eye fatigue</p>
+</div>
+
+<div>
+<h2>20-20-20</h2>
+<p>Recommended ophthalmic rest interval rule</p>
+</div>
+
+<div>
+<h2>12-15</h2>
+<p>Optimal blinks per minute for cornea hydration</p>
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-title">
+
+<small>ADVANCED DIAGNOSTICS</small>
+
+<h2>Clinical Quality Monitoring at Your Desk</h2>
+
+<p>
+Computer Vision Syndrome causes chronic dry eyes,
+headaches, fatigue and blurry vision. CVS Health Tracker
+AI uses edge computer vision to keep you safe dynamically.
+</p>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<div class="icon i1">
+<i class="fa-solid fa-wave-square"></i>
+</div>
+
+<h3>Real-Time Blink Tracking</h3>
+
+<p>
+Uses your laptop camera to count blink cycles and identify dry-eye hazards instantly.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="icon i2">
+<i class="fa-solid fa-eye"></i>
+</div>
+
+<h3>Multi-Symptom Detection</h3>
+
+<p>
+Measures eye squeezing, squinting and itching gestures using AI vision.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="icon i3">
+<i class="fa-solid fa-shield-heart"></i>
+</div>
+
+<h3>CVS Risk Calculator</h3>
+
+<p>
+Aggregates symptoms and blink metrics into a comprehensive wellness score.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="icon i4">
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+</div>
+
+<h3>Adaptive AI Coaching</h3>
+
+<p>
+Receive contextual warnings and personalized eye-care recommendations.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>

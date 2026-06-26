@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVS Health Tracker AI - Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+body::before{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+background:
+linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px);
+background-size:60px 60px;
+z-index:-2;
+}
+
+body::after{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%, rgba(0,255,255,.12), transparent 40%),
+radial-gradient(circle at 80% 80%, rgba(128,0,255,.15), transparent 40%);
+z-index:-1;
+}
+
+.back-btn{
+position:absolute;
+top:25px;
+left:25px;
+text-decoration:none;
+color:#8fa4bc;
+font-size:14px;
+}
+
+.container{
+width:1100px;
+height:680px;
+background:rgba(5,13,28,.85);
+border:1px solid rgba(255,255,255,.05);
+border-radius:25px;
+overflow:hidden;
+display:flex;
+backdrop-filter:blur(20px);
+box-shadow:
+0 0 60px rgba(0,255,255,.05),
+0 0 120px rgba(124,58,237,.08);
+}
+
+.left-panel{
+width:45%;
+border-right:1px solid rgba(255,255,255,.05);
+padding:35px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+color:#00e5ff;
+font-weight:700;
+}
+
+.logo-box{
+width:35px;
+height:35px;
+border:1px solid #00e5ff;
+border-radius:10px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+.eye-container{
+text-align:center;
+margin-top:20px;
+}
+
+.eye-scanner{
+position:relative;
+width:320px;
+height:320px;
+margin:auto;
+}
+
+/* Biggest ring */
+
+.outer-ring{
+position:absolute;
+width:260px;
+height:260px;
+border-radius:50%;
+border:1px solid rgba(0,255,255,.05);
+top:30px;
+left:30px;
+}
+
+/* Middle ring */
+
+.middle-ring{
+position:absolute;
+width:220px;
+height:220px;
+border-radius:50%;
+border:1px solid rgba(0,255,255,.05);
+top:50px;
+left:50px;
+}
+
+/* Eye outline */
+
+.eye-outline{
+position:absolute;
+width:190px;
+height:100px;
+border-radius:100px;
+border:1px solid rgba(0,255,255,.05);
+top:110px;
+left:65px;
+}
+
+/* Iris */
+
+.iris{
+position:absolute;
+width:80px;
+height:80px;
+border-radius:50%;
+background:#00cfff;
+top:120px;
+left:120px;
+}
+
+/* Pupil */
+
+.pupil{
+position:absolute;
+width:42px;
+height:42px;
+border-radius:50%;
+background:#020617;
+top:139px;
+left:139px;
+}
+
+/* Reflection */
+
+
+/* Top scanner line */
+
+.top-line{
+position:absolute;
+width:170px;
+height:3px;
+background:#00e5ff;
+top:78px;
+left:75px;
+
+box-shadow:
+0 0 8px #00e5ff,
+0 0 20px #00e5ff,
+0 0 35px #00e5ff;
+
+animation:scanner 3s linear infinite;
+}
+
+.eye-container h2{
+margin-top:25px;
+margin-bottom:15px;
+}
+
+.eye-container p{
+color:#7b8aa0;
+line-height:1.8;
+font-size:14px;
+}
+
+.bottom-text{
+color:#00e5ff;
+letter-spacing:2px;
+font-size:12px;
+}
+
+.right-panel{
+width:55%;
+padding:50px;
+}
+
+.right-panel h1{
+font-size:52px;
+font-weight:800;
+color:#ffffff;
+margin-bottom:10px;
+}
+
+.subtitle{
+color:#7b8aa0;
+margin-bottom:35px;
+}
+
+label{
+display:block;
+font-size:12px;
+letter-spacing:2px;
+margin-bottom:8px;
+color:#a0b3c6;
+}
+
+.input-group{
+position:relative;
+margin-bottom:25px;
+}
+
+.input-group i{
+position:absolute;
+left:18px;
+top:21px;
+color:#6b7c91;
+}
+
+input{
+width:100%;
+height:60px;
+background:#050d1c;
+border:1px solid rgba(0,255,255,.08);
+border-radius:14px;
+padding-left:50px;
+color:white;
+font-size:15px;
+outline:none;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+font-size:14px;
+}
+
+.row a{
+text-decoration:none;
+color:#00e5ff;
+}
+
+button{
+width:100%;
+height:62px;
+background:linear-gradient(90deg,#0066ff,#00d4ff);
+border:none;
+border-radius:14px;
+font-size:17px;
+font-weight:700;
+color:white;
+cursor:pointer;
+box-shadow:0 0 30px rgba(0,212,255,.15);
+margin-bottom:20px;
+}
+
+.demo-btn{
+width:100%;
+height:55px;
+border:1px solid rgba(0,255,255,.15);
+background:#07111f;
+color:#00e5ff;
+border-radius:14px;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+margin-bottom:20px;
+}
+
+.signup-link{
+text-align:center;
+color:#7b8aa0;
+}
+
+.signup-link a{
+text-decoration:none;
+color:#00e5ff;
+}
+
+.error{
+background:#4b1111;
+border:1px solid #ff4d4d;
+padding:12px;
+border-radius:10px;
+margin-bottom:20px;
+color:#ffaaaa;
+}
+@keyframes scanner{
+
+0%{
+top:78px;
+}
+
+50%{
+top:220px;
+}
+
+100%{
+top:78px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<a href="/" class="back-btn">
+<i class="fa-solid fa-arrow-left"></i>
+BACK TO LANDING
+</a>
+
+<div class="container">
+
+<div class="left-panel">
+
+<div class="logo">
+<div class="logo-box">
+<i class="fa-solid fa-eye"></i>
+</div>
+CVS Health Tracker AI
+</div>
+
+<div class="eye-container">
+<div class="eye-scanner">
+
+<div class="outer-ring"></div>
+
+<div class="middle-ring"></div>
+
+<div class="eye-outline"></div>
+
+<div class="iris"></div>
+
+<div class="pupil"></div>
+
+
+
+<div class="top-line"></div>
+
+</div>
+
+<h2>Protect Your Retina</h2>
+
+<p>
+"An estimated 50-90% of computer users experience some ophthalmic symptoms including dry eye, irritation, and accommodation disorders."
+</p>
+
+</div>
+
+<div class="bottom-text">
+✧ AI SCAN MODEL ACTIVE V4.2
+</div>
+
+</div>
+
+<div class="right-panel">
+
+<h1>Welcome Back</h1>
+
+<div class="subtitle">
+Access your personalized clinical eye health report history.
+</div>
+
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
+
+<form method="POST">
+
+<label>EMAIL ADDRESS</label>
+
+<div class="input-group">
+<i class="fa-regular fa-envelope"></i>
+<input
+type="email"
+name="email"
+placeholder="eyecare.student@example.com"
+required>
+</div>
+
+<label>SECURITY PASSWORD</label>
+
+<div class="input-group">
+<i class="fa-solid fa-lock"></i>
+<input
+type="password"
+name="password"
+placeholder="••••••••••••"
+required>
+</div>
+
+<div class="row">
+
+<div style="display:flex;align-items:center;gap:8px;">
+<input type="checkbox" style="width:16px;height:16px;padding:0;">
+<span style="color:#8fa4bc;">Remember my session</span>
+</div>
+
+
+
+</div>
+
+<button type="submit">
+Verify & Log In →
+</button>
+
+<div class="demo-btn">
+⚡ DEMO ACCOUNT (QUICK LOGIN)
+</div>
+
+<div class="signup-link">
+Don't have a diagnostic account?
+<a href="/signup">Create Account Free</a>
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+</html>

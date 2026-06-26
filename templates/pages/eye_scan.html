@@ -1,0 +1,524 @@
+<style>
+
+.small{
+color:#00e5ff;
+font-size:12px;
+letter-spacing:2px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.title{
+font-size:20px;
+font-weight:800;
+margin-bottom:10px;
+color:#ffffff;
+}
+
+.subtitle{
+color:#7b8aa0;
+font-size:11px;
+margin-bottom:18px;
+line-height:1.7;
+}
+
+.scan-layout{
+display:grid;
+grid-template-columns:700px 330px;
+column-gap:18px;
+align-items:start;
+}
+
+.scan-card{
+width:700px;
+min-height:530px;
+background:#0d1321;
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:18px;
+display:flex;
+flex-direction:column;
+height:100%;
+box-shadow:none;
+}
+
+.right-panel{
+width:330px;
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.scan-top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+margin-bottom:18px;
+}
+
+.scan-status{
+font-size:11px;
+letter-spacing:1px;
+line-height:1.8;
+color:#6d82a8;
+}
+
+.scan-status span{
+display:block;
+}
+
+.scan-status b{
+color:#00d4ff;
+font-weight:600;
+}
+
+.scan-latency{
+text-align:right;
+font-size:11px;
+line-height:1.8;
+color:#6d82a8;
+}
+
+.scan-latency b{
+color:#00d4ff;
+}
+
+.eye-box{
+height:250px;
+flex:1;
+background:#0a101c;
+border:1px solid rgba(255,255,255,.05);
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+position:relative;
+margin:20px 34px;
+}
+
+.eye-placeholder{
+position:relative;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.eye-placeholder h2{
+margin-top:18px;
+font-size:22px;
+color:#00d4ff;
+letter-spacing:2px;
+}
+
+.eye-placeholder p{
+margin-top:12px;
+font-size:13px;
+line-height:1.8;
+color:#7d8ca8;
+max-width:420px;
+}
+
+.eye-animation{
+position:relative;
+width:140px;
+height:140px;
+margin:0 auto 20px;
+}
+
+.outer-ring{
+position:absolute;
+width:140px;
+height:140px;
+border-radius:50%;
+border:1px solid rgba(0,212,255,.12);
+animation:rotate1 10s linear infinite;
+}
+
+.middle-ring{
+position:absolute;
+width:102px;
+height:102px;
+left:19px;
+top:19px;
+border-radius:50%;
+border:1px solid rgba(125,66,255,.18);
+animation:rotate2 8s linear infinite reverse;
+}
+
+.eye-core{
+position:absolute;
+width:56px;
+height:56px;
+background:#4f8dff;
+border-radius:50%;
+left:42px;
+top:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:
+0 0 15px rgba(0,212,255,.35),
+0 0 35px rgba(0,212,255,.25);
+}
+
+.eye-core::after{
+content:'';
+width:28px;
+height:28px;
+background:#08101d;
+border-radius:50%;
+}
+
+.scan-line{
+position:absolute;
+width:150px;
+height:3px;
+background:#00d4ff;
+left:50%;
+top:15px;
+transform:translateX(-50%);
+box-shadow:
+0 0 10px #00d4ff,
+0 0 25px #00d4ff,
+0 0 45px #00d4ff;
+animation:scanner 2.5s linear infinite;
+z-index:10;
+}
+
+@keyframes scanner{
+0%{
+top:10px;
+}
+50%{
+top:108px;
+}
+100%{
+top:10px;
+}
+}
+
+@keyframes rotate1{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+@keyframes rotate2{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+.button-row{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+padding:18px 34px 6px;
+}
+
+.start-btn{
+width:250px;
+height:42px;
+flex:none;
+border:none;
+border-radius:12px;
+background:linear-gradient(90deg,#0078ff,#b026ff);
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+color:white;
+font-weight:700;
+font-size:15px;
+text-decoration:none;
+cursor:pointer;
+}
+
+.reset-btn{
+width:120px;
+height:42px;
+background:#172030;
+border:1px solid rgba(255,255,255,.08);
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+text-decoration:none;
+color:#d6e1f0;
+font-size:13px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.reset-btn:hover{
+background:#223149;
+}
+
+.info-card{
+background:#101827;
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:18px;
+margin:0;
+}
+
+.info-title{
+font-size:11px;
+letter-spacing:2px;
+font-weight:700;
+color:#8fa4bc;
+margin-bottom:22px;
+}
+
+.info-row{
+display:flex;
+justify-content:space-between;
+padding:8px 0;
+border-bottom:1px solid rgba(255,255,255,.05);
+font-size:11px;
+}
+
+.info-row:last-child{
+border-bottom:none;
+}
+
+.info-row span:last-child{
+font-weight:700;
+}
+
+.green{
+color:#22d3a6;
+}
+
+.blue{
+color:#00d4ff;
+}
+
+.purple{
+color:#c084fc;
+}
+
+.orange{
+color:#ffb347;
+}
+
+.bio-box{
+margin-top:12px;
+padding:12px;
+background:#101827;
+border-radius:14px;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.bio-box h4{
+font-size:12px;
+letter-spacing:2px;
+color:#8fa4bc;
+margin-bottom:12px;
+}
+
+.bio-box p{
+font-size:13px;
+line-height:1.8;
+color:#8fa4bc;
+}
+
+.guide-list{
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.guide-list li{
+display:flex;
+align-items:flex-start;
+gap:10px;
+margin-bottom:12px;
+font-size:12px;
+line-height:1.6;
+color:#9cb0ca;
+}
+
+.guide-list li:last-child{
+margin-bottom:0;
+}
+
+.guide-list li::before{
+content:"●";
+color:#00d4ff;
+font-size:10px;
+margin-top:7px;
+}
+
+</style>
+
+<div class="small">
+RETINAL TELEMETRY SCANNER
+</div>
+
+<div class="title">
+AI Eye Scan Screen
+</div>
+
+<div class="subtitle">
+Leverage edge visual analytics to monitor Computer Vision Syndrome indicators.
+</div>
+
+<div class="scan-layout">
+
+<div class="scan-card">
+
+<div class="scan-top">
+
+<div class="scan-status">
+<span><b>●</b> HUD_MONITOR_ACTIVE</span>
+<span>GAZE TRACKING : ENABLED</span>
+<span>WEB SYSTEM : LIVE</span>
+</div>
+
+<div class="scan-latency">
+<div><b>LATENCY : 13ms</b></div>
+<div>MODEL : EFFICIENT_NET_B0</div>
+<div>SYSTEM : GPU NORMAL</div>
+</div>
+
+</div>
+
+<div class="eye-box">
+
+{% if camera_active %}
+
+<img
+src="/video_feed"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:12px;
+">
+
+{% else %}
+
+<div class="eye-placeholder">
+
+<div class="eye-animation">
+<div class="outer-ring"></div>
+<div class="middle-ring"></div>
+<div class="eye-core"></div>
+<div class="scan-line"></div>
+</div>
+
+<h2>
+CAMERA SIMULATOR ACTIVE
+</h2>
+
+<p>
+Biometric focus analytics awaiting.
+Live tracking calibration enabled.
+</p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+<div class="button-row">
+
+<a href="/start_camera" class="start-btn">
+▶ Initiate AI Diagnostics
+</a>
+
+<a href="/reset_camera" class="reset-btn">
+⟳ Reset Camera
+</a>
+
+</div>
+
+</div>
+
+<div class="right-panel">
+
+<div class="info-card">
+
+<div class="info-title">
+DIAGNOSTICS HUD PANEL
+</div>
+
+<div class="info-row">
+<span>CAMERA RATIO</span>
+<span>16 : 9 WIDESCREEN</span>
+</div>
+
+<div class="info-row">
+<span>MODEL FRAME RATE</span>
+<span class="green">59.4 FPS</span>
+</div>
+
+<div class="info-row">
+<span>REACTION COEF</span>
+<span class="blue">8.98 SEC</span>
+</div>
+
+<div class="info-row">
+<span>LIGHT INTENSITY</span>
+<span class="orange">451 LUX (Optimal)</span>
+</div>
+
+<div class="info-row">
+<span>CORNEA CALIBRATE</span>
+<span class="purple">99% MATCH</span>
+</div>
+
+<div class="bio-box">
+
+<h4>
+BIOMETRIC INTEGRITY NOTE
+</h4>
+
+<p>
+Retinal landmark data trains your web browser
+utilizing standardized tensor models.
+Video coordinates are purged from cache instantly.
+</p>
+
+</div>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-title">
+CALIBRATION GUIDES
+</div>
+
+<ul class="guide-list">
+
+<li>
+Sit 20–30 inches back from the screen
+for an ideal environment.
+</li>
+
+<li>
+Keep eyes level with the web camera
+sensor lens.
+</li>
+
+<li>
+Refrain from wearing tinted glasses
+during diagnostic cycles.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>

@@ -1,0 +1,488 @@
+<style>
+
+.progress-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.progress-small{
+font-size:11px;
+letter-spacing:2px;
+color:#00d4ff;
+font-weight:700;
+}
+
+.progress-title{
+font-size:30px;
+font-weight:800;
+margin-top:6px;
+}
+
+.progress-sub{
+font-size:13px;
+color:#7b8aa0;
+margin-top:8px;
+}
+
+.new-btn{
+padding:12px 22px;
+background:linear-gradient(90deg,#0ea5ff,#2563eb);
+border-radius:12px;
+color:white;
+text-decoration:none;
+font-size:13px;
+font-weight:700;
+}
+
+.top-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+margin-bottom:20px;
+}
+
+.stat{
+background:#08111f;
+border:1px solid rgba(255,255,255,.05);
+border-radius:16px;
+padding:20px;
+}
+
+.label{
+font-size:10px;
+letter-spacing:2px;
+color:#7187a3;
+margin-bottom:10px;
+}
+
+.big{
+font-size:36px;
+font-weight:800;
+color:white;
+}
+
+.green{
+color:#22c55e;
+}
+
+.blue{
+color:#00d4ff;
+}
+
+.stat p{
+font-size:12px;
+color:#7b8aa0;
+margin-top:10px;
+line-height:1.7;
+}
+
+.bottom-grid{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:18px;
+}
+
+.chart-card{
+background:#0b1120;
+border:1px solid rgba(255,255,255,.05);
+border-radius:18px;
+padding:18px;
+height:360px;
+position:relative;
+}
+
+.side-card{
+background:#08111f;
+border-radius:18px;
+border:1px solid rgba(255,255,255,.05);
+padding:22px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.circle{
+width:120px;
+height:120px;
+border-radius:50%;
+border:2px solid #00d4ff;
+display:flex;
+justify-content:center;
+align-items:center;
+margin-bottom:20px;
+}
+
+.circle i{
+font-size:36px;
+color:#00d4ff;
+}
+
+.grade{
+font-size:13px;
+letter-spacing:2px;
+color:#00d4ff;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.side-title{
+font-size:28px;
+font-weight:800;
+margin-bottom:15px;
+}
+
+.side-text{
+text-align:center;
+font-size:13px;
+line-height:1.8;
+color:#7b8aa0;
+}
+
+.footer{
+width:100%;
+margin-top:30px;
+display:flex;
+justify-content:space-between;
+font-size:12px;
+border-top:1px solid rgba(255,255,255,.05);
+padding-top:20px;
+}
+
+.footer b{
+color:#22c55e;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% if progress %}
+
+<div class="progress-header">
+
+<div>
+
+<div class="progress-small">
+ANALYTICS & PROGRESS ENGINE
+</div>
+
+<div class="progress-title">
+Improvement Monitoring
+</div>
+
+<div class="progress-sub">
+Evaluate computer vision rehabilitation progress.
+</div>
+
+</div>
+
+<a href="/eye_scan" class="new-btn">
+Calibrate New Scan →
+</a>
+
+</div>
+
+<div class="top-grid">
+
+<div class="stat">
+
+<div class="label">
+CVS RISK COMPARISON
+</div>
+
+<div class="big">
+{{progress.previous}}%
+<span class="blue">→</span>
+{{progress.latest}}%
+</div>
+
+<p>
+Risk reduction between previous and current scan.
+</p>
+
+</div>
+
+<div class="stat">
+
+<div class="label">
+REHAB IMPROVEMENT
+</div>
+
+<div class="big green">
++{{progress.improvement}}%
+</div>
+
+<p>
+Overall strain reduced after AI rehabilitation.
+</p>
+
+</div>
+
+<div class="stat">
+
+<div class="label">
+REHAB MILESTONE
+</div>
+
+<div class="big">
+{{progress.tier}}
+</div>
+
+<p>
+Current improvement level.
+</p>
+
+</div>
+
+</div>
+
+<div class="bottom-grid">
+
+<div class="chart-card">
+
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;">
+
+<div>
+
+<div style="font-size:18px;font-weight:700;color:white;">
+7-Day CVS Risk Trend
+</div>
+
+<div style="font-size:11px;color:#6f7f95;letter-spacing:2px;margin-top:8px;">
+CHRONOLOGICAL CLINICAL OVERVIEW
+</div>
+
+</div>
+
+<div style="display:flex;gap:20px;font-size:13px;">
+
+<div style="color:#56d8ff;">
+● My Risk Score
+</div>
+
+<div style="color:#16d99a;">
+▬ Baseline Limit (15%)
+</div>
+
+</div>
+
+</div>
+
+<canvas id="trendChart"></canvas>
+
+<div style="display:flex;justify-content:space-between;margin-top:20px;color:#687b92;font-size:12px;font-weight:600;letter-spacing:1px;">
+
+<div>
+DIAGNOSTIC PROTOCOL : ISO-9241 ERGONOMICS
+</div>
+
+<div>
+HOVER POINTS FOR HISTORIC TELEMETRY
+</div>
+
+</div>
+
+</div>
+
+<div class="side-card">
+
+<div class="circle">
+<i>❤</i>
+</div>
+
+<div class="grade">
+{{progress.tier}}
+</div>
+
+<div class="side-title">
+Improving Patient
+</div>
+
+<div class="side-text">
+
+Estimated rehabilitation trend indicates reduced
+Computer Vision Syndrome symptoms.
+
+</div>
+
+<div class="footer">
+
+<div>
+
+CURRENT TARGET
+
+<br><br>
+
+6h Daily Limit
+
+</div>
+
+<div>
+
+STATUS
+
+<br><br>
+
+<b>✓ Compliant</b>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+const scores = JSON.parse('{{ progress.scores | tojson | safe }}');
+
+const labels = scores.map((_, index) => "Scan " + (index + 1));
+
+const ctx = document.getElementById("trendChart").getContext("2d");
+
+const gradient = ctx.createLinearGradient(0,0,0,320);
+
+gradient.addColorStop(0,"rgba(0,212,255,.28)");
+gradient.addColorStop(1,"rgba(0,212,255,0)");
+
+new Chart(ctx,{
+
+type:"line",
+
+data:{
+
+labels:["Rep 1","Rep 2","Rep 3","Rep 4","Rep 5","Rep 6","Rep 7"],
+
+datasets:[{
+
+label:"Risk",
+
+data:scores,
+
+fill:true,
+
+backgroundColor:gradient,
+
+borderWidth:4,
+
+borderColor:function(context){
+
+const chart=context.chart;
+const area=chart.chartArea;
+
+if(!area) return "#00d4ff";
+
+const g=chart.ctx.createLinearGradient(area.left,0,area.right,0);
+
+g.addColorStop(0,"#ff4f7b");
+g.addColorStop(.35,"#c05cff");
+g.addColorStop(.7,"#5ca7ff");
+g.addColorStop(1,"#37d7ff");
+
+return g;
+
+},
+
+pointRadius:4,
+
+pointHoverRadius:7,
+
+pointBackgroundColor:"#37d7ff",
+
+pointBorderWidth:0,
+
+tension:.45
+
+},
+
+{
+
+label:"Baseline",
+
+data:[15,15,15,15,15,15,15],
+
+borderColor:"#19d8a1",
+
+borderDash:[5,5],
+
+pointRadius:0,
+
+borderWidth:2,
+
+fill:false
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false,
+
+plugins:{
+
+legend:{
+display:false
+}
+
+},
+
+interaction:{
+mode:"index",
+intersect:false
+},
+
+scales:{
+
+x:{
+
+grid:{
+display:false
+},
+
+ticks:{
+color:"#7386a0"
+}
+
+},
+
+y:{
+
+min:0,
+
+max:100,
+
+ticks:{
+
+stepSize:25,
+
+color:"#7386a0",
+
+callback:(v)=>v+"%"
+
+},
+
+grid:{
+
+color:"rgba(255,255,255,.05)"
+
+}
+
+}
+
+}
+
+}
+
+});
+</script>
+{% else %}
+
+<h2>No Progress Available</h2>
+
+{% endif %}

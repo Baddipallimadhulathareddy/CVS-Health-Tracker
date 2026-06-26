@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVS Health Tracker AI - Signup</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+body::before{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+background:
+linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px);
+background-size:60px 60px;
+z-index:-2;
+}
+
+body::after{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%, rgba(0,255,255,.12), transparent 40%),
+radial-gradient(circle at 80% 80%, rgba(128,0,255,.15), transparent 40%);
+z-index:-1;
+}
+
+.back-btn{
+position:absolute;
+top:25px;
+left:25px;
+color:#8fa4bc;
+text-decoration:none;
+font-size:14px;
+}
+
+.container{
+width:950px;
+height:560px;
+display:flex;
+background:rgba(5,13,28,.85);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+overflow:hidden;
+backdrop-filter:blur(20px);
+}
+
+.left-panel{
+width:45%;
+padding:40px;
+border-right:1px solid rgba(255,255,255,.06);
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+color:#00e5ff;
+font-weight:700;
+}
+
+.logo-box{
+width:35px;
+height:35px;
+border:1px solid #00e5ff;
+border-radius:10px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.feature{
+display:flex;
+gap:15px;
+margin-bottom:35px;
+}
+
+.feature i{
+font-size:18px;
+color:#00e5ff;
+margin-top:4px;
+}
+
+.feature h4{
+margin-bottom:8px;
+}
+
+.feature p{
+font-size:13px;
+color:#7e8ea3;
+line-height:1.6;
+}
+
+.bottom-text{
+color:#00e5ff;
+font-size:13px;
+letter-spacing:2px;
+}
+
+.right-panel{
+width:55%;
+padding:45px;
+}
+
+.right-panel h1{
+font-size:34px;
+margin-bottom:10px;
+}
+
+.subtitle{
+color:#7d8ea4;
+margin-bottom:35px;
+}
+
+label{
+display:block;
+font-size:12px;
+letter-spacing:2px;
+margin-bottom:8px;
+color:#9cb0c5;
+}
+
+.input-group{
+position:relative;
+margin-bottom:22px;
+}
+
+.input-group i{
+position:absolute;
+left:15px;
+top:16px;
+color:#6b7c91;
+}
+
+input{
+width:100%;
+height:52px;
+background:#07111f;
+border:1px solid rgba(255,255,255,.05);
+border-radius:14px;
+padding-left:45px;
+color:white;
+outline:none;
+}
+
+.row{
+display:flex;
+gap:15px;
+}
+
+button{
+width:100%;
+height:55px;
+border:none;
+border-radius:14px;
+background:linear-gradient(90deg,#0066ff,#00d4ff);
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+margin-top:8px;
+}
+
+.login-link{
+text-align:center;
+margin-top:18px;
+color:#7d8ea4;
+font-size:14px;
+}
+
+.login-link a{
+color:#00e5ff;
+text-decoration:none;
+}
+
+</style>
+</head>
+<body>
+
+<a href="/" class="back-btn">
+<i class="fa-solid fa-arrow-left"></i> BACK TO LANDING
+</a>
+
+<div class="container">
+
+<div class="left-panel">
+
+<div class="logo">
+<div class="logo-box">
+<i class="fa-solid fa-eye"></i>
+</div>
+CVS Health Tracker AI
+</div>
+
+<div>
+
+<div class="feature">
+<i class="fa-solid fa-heart-pulse"></i>
+<div>
+<h4>Diagnostic Record Setup</h4>
+<p>Establish an eye monitoring database. All scans are executed locally.</p>
+</div>
+</div>
+
+<div class="feature">
+<i class="fa-regular fa-clock"></i>
+<div>
+<h4>Custom Target Tracking</h4>
+<p>Configure maximum screen time and healthy blink goals.</p>
+</div>
+</div>
+
+<div class="feature">
+<i class="fa-solid fa-shield-halved"></i>
+<div>
+<h4>Privacy Safe Architecture</h4>
+<p>Your data remains secure and protected locally.</p>
+</div>
+</div>
+
+</div>
+
+<div class="bottom-text">
+ENCRYPTED LOCAL STORAGE DATABASE ACTIVE
+</div>
+
+</div>
+
+<div class="right-panel">
+
+<h1>Create Diagnostic Account</h1>
+
+<div class="subtitle">
+Set up your eye-health telemetry dashboard.
+</div>
+
+<form method="POST">
+
+<label>FULL NAME</label>
+<div class="input-group">
+<i class="fa-regular fa-user"></i>
+<input type="text" name="name" required>
+</div>
+
+<label>EMAIL ADDRESS</label>
+<div class="input-group">
+<i class="fa-regular fa-envelope"></i>
+<input type="email" name="email" required>
+</div>
+
+<div class="row">
+
+<div style="flex:1">
+<label>PASSWORD</label>
+<div class="input-group">
+<i class="fa-solid fa-lock"></i>
+<input type="password" name="password" required>
+</div>
+</div>
+
+<div style="flex:1">
+<label>CONFIRM PASSWORD</label>
+<div class="input-group">
+<i class="fa-solid fa-lock"></i>
+<input type="password" required>
+</div>
+</div>
+
+</div>
+
+<button type="submit">
+Register Clinical Account →
+</button>
+
+<div class="login-link">
+Already registered?
+<a href="/login">Log In Instead</a>
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+</html>

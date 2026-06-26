@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CVS Health Tracker AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+height:100vh;
+overflow:hidden;
+}
+
+body::before{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+background:
+linear-gradient(rgba(0,255,255,.03) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,255,255,.03) 1px,transparent 1px);
+background-size:60px 60px;
+z-index:-2;
+}
+
+body::after{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%,rgba(0,255,255,.08),transparent 40%),
+radial-gradient(circle at 80% 80%,rgba(128,0,255,.12),transparent 40%);
+z-index:-1;
+}
+
+/* MAIN LAYOUT */
+
+.dashboard{
+display:flex;
+height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:280px;
+background:#040b17;
+border-right:1px solid rgba(255,255,255,.05);
+padding:25px;
+display:flex;
+flex-direction:column;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:700;
+color:#00e5ff;
+margin-bottom:30px;
+font-size:20px;
+}
+
+.logo-icon{
+width:42px;
+height:42px;
+border-radius:12px;
+border:1px solid #00e5ff;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.user-card{
+background:#07111f;
+border-radius:18px;
+padding:18px;
+border:1px solid rgba(255,255,255,.05);
+margin-bottom:25px;
+}
+
+.avatar{
+width:48px;
+height:48px;
+border-radius:50%;
+background:linear-gradient(135deg,#0066ff,#00d4ff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+font-size:18px;
+margin-bottom:12px;
+}
+
+.user-name{
+font-size:15px;
+font-weight:600;
+}
+
+.user-email{
+font-size:12px;
+color:#7b8aa0;
+margin-top:6px;
+}
+
+.status{
+margin-top:14px;
+padding:8px;
+border-radius:10px;
+background:#0a2038;
+text-align:center;
+color:#4ade80;
+font-size:12px;
+font-weight:600;
+}
+
+.menu-title{
+margin:25px 0 18px;
+font-size:12px;
+letter-spacing:2px;
+color:#7b8aa0;
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.menu a{
+text-decoration:none;
+color:#a8b4c7;
+padding:14px;
+border-radius:12px;
+display:flex;
+align-items:center;
+gap:12px;
+transition:.3s;
+}
+
+.menu a:hover{
+background:#0b1830;
+color:white;
+}
+
+.menu .active{
+background:linear-gradient(90deg,#0066ff,#00d4ff);
+color:white;
+}
+
+.bottom{
+margin-top:auto;
+}
+
+.system-box{
+background:#07111f;
+padding:12px;
+border-radius:12px;
+font-size:11px;
+line-height:1.6;
+color:#8fa4bc;
+width:100%;
+}
+
+/* RIGHT AREA */
+
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+overflow:hidden;
+}
+
+.topbar{
+height:75px;
+background:#07111f;
+border-bottom:1px solid rgba(255,255,255,.05);
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 30px;
+}
+
+.top-left h4{
+font-size:13px;
+letter-spacing:2px;
+color:#00e5ff;
+font-weight:600;
+}
+
+.top-left h2{
+margin-top:8px;
+font-size:30px;
+font-weight:800;
+}
+
+.top-right{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.scan-btn{
+text-decoration:none;
+background:linear-gradient(90deg,#0066ff,#00d4ff);
+padding:14px 26px;
+border-radius:12px;
+font-weight:600;
+color:white;
+}
+
+.content{
+flex:1;
+overflow:auto;
+padding:30px;
+}
+
+/* COMMON CARD */
+
+.card{
+background:#07111f;
+border:1px solid rgba(255,255,255,.05);
+border-radius:18px;
+padding:20px;
+}
+/* SCROLLBAR */
+
+.content::-webkit-scrollbar{
+width:8px;
+}
+
+.content::-webkit-scrollbar-thumb{
+background:#1f3b63;
+border-radius:10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+
+.sidebar{
+width:230px;
+}
+
+.top-left h2{
+font-size:24px;
+}
+
+}
+
+@media(max-width:900px){
+
+.dashboard{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+height:auto;
+border-right:none;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.main{
+height:100%;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="logo">
+
+<div class="logo-icon">
+<i class="fa-solid fa-eye"></i>
+</div>
+
+CVS Health Tracker AI
+
+</div>
+
+<div class="user-card">
+
+<div class="avatar">
+ES
+</div>
+
+<div class="user-name">
+{{ current_name }}
+</div>
+
+<div class="user-email">
+{{ current_email }}
+</div>
+
+<div class="status">
+IMPROVING
+</div>
+
+</div>
+
+<div class="menu-title">
+PATIENT PORTAL
+</div>
+
+<div class="menu">
+
+<a href="/dashboard"
+class="{% if page=='dashboard' %}active{% endif %}">
+<i class="fa-solid fa-chart-line"></i>
+Dashboard
+</a>
+
+<a href="/eye_scan"
+class="{% if page=='eye_scan' %}active{% endif %}">
+<i class="fa-solid fa-eye"></i>
+ Eye Scan
+</a>
+
+<a href="/progress"
+class="{% if page=='progress' %}active{% endif %}">
+<i class="fa-solid fa-chart-column"></i>
+Progress Tracking
+</a>
+
+<a href="/history"
+class="{% if page=='history' %}active{% endif %}">
+<i class="fa-solid fa-clock-rotate-left"></i>
+Report History
+</a>
+
+</div>
+
+<div class="bottom">
+
+<div class="system-box">
+
+SYSTEM :
+<span style="color:#22c55e;">ONLINE</span>
+
+<br>
+
+SANDBOX :
+127.0.0.1
+
+<br>
+
+FRAME RATE :
+60 FPS
+
+<hr style="
+border:none;
+border-top:1px solid rgba(255,255,255,.08);
+margin:10px 0;
+">
+
+<a href="/logout" style="
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+text-decoration:none;
+background:#b91c1c;
+color:white;
+padding:8px;
+border-radius:8px;
+font-size:12px;
+font-weight:600;
+transition:.3s;
+">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+{% if page=="dashboard" %}
+
+<div class="topbar">
+
+<div class="top-left">
+
+<h4>
+LIVE BIOMETRICS DASHBOARD
+</h4>
+
+<h2>
+Hello, Eyecare Student
+</h2>
+
+</div>
+
+<div class="top-right">
+
+<a href="/eye_scan" class="scan-btn">
+▶ Begin Live Scan
+</a>
+git add .
+</div>
+
+</div>
+
+{% endif %}
+
+<div class="content">
+
+{% if page=="dashboard" %}
+
+{% include "pages/dashboard.html" %}
+
+{% elif page=="eye_scan" %}
+
+{% include "pages/eye_scan.html" %}
+
+{% elif page=="history" %}
+
+{% include "pages/history.html" %}
+
+{% elif page=="progress" %}
+
+{% include "pages/progress.html" %}
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
