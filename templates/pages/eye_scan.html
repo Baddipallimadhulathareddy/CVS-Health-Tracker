@@ -394,14 +394,38 @@ Leverage edge visual analytics to monitor Computer Vision Syndrome indicators.
 
 {% if camera_active %}
 
-<img
-src="/video_feed"
+<video
+id="video"
+autoplay
+playsinline
 style="
 width:100%;
 height:100%;
 object-fit:cover;
 border-radius:12px;
 ">
+</video>
+
+<canvas
+id="canvas"
+style="display:none;">
+</canvas>
+
+<script>
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+
+navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: false
+})
+.then(stream => {
+    video.srcObject = stream;
+})
+.catch(err => {
+    console.error("Camera access denied:", err);
+});
+</script>
 
 {% else %}
 
@@ -431,13 +455,11 @@ Live tracking calibration enabled.
 
 <div class="button-row">
 
-<a href="/start_camera" class="start-btn">
+<button id="startScan" class="start-btn">
 ▶ Initiate AI Diagnostics
-</a>
+</button>
 
-<a href="/reset_camera" class="reset-btn">
-⟳ Reset Camera
-</a>
+
 
 </div>
 
