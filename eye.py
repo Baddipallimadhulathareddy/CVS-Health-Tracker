@@ -66,7 +66,10 @@ def redness_detection(eye_region):
 def process_frame(frame):
     global blink_counter, closed_frames, blink_start_time, blink_durations, blink_timestamps, baseline_ear_values, baseline_ear
 
-    start_time = time.time()
+    global start_time
+
+    if "start_time" not in globals():
+        start_time = time.time()
     TEST_DURATION = 30
     session_redness = []
     session_squeezing = 0
@@ -347,35 +350,53 @@ def process_frame(frame):
 
     recommendations_text = "\n".join(recommendations)
 
-    # ---------------- Database Save ----------------
-    try:
-        from database import db, cursor
-        with open("current_user.txt", "r") as f:
-            user_id = int(f.read())
+        # ---------------- Database Save ----------------
 
-        query = """
-        INSERT INTO reports(
-            user_id, blink_rate, redness, squeezing, itching,
-            risk_score, risk_level, recommendations
-        )
-        VALUES(%s, %s, %s, %s, %s, %s, %s, %s)
-        """
-        cursor.execute(
-            query,
-            (
+    elapsed_time = time.time() - start_time
+
+    if elapsed_time >= TEST_DURATION:
+
+        try:
+
+            from database import db, cursor
+
+            with open("current_user.txt", "r") as f:
+                user_id = int(f.read())
+
+            query = """
+            INSERT INTO reports(
                 user_id,
                 blink_rate,
-                final_redness,
-                final_squeezing,
-                final_itching,
+                redness,
+                squeezing,
+                itching,
                 risk_score,
                 risk_level,
-                recommendations_text
+                recommendations
             )
-        )
-        db.commit()
-    except Exception as e:
-        print("Database error:", e)
+            VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
+            """
+
+            cursor.execute(
+                query,
+                (
+                    user_id,
+                    blink_rate,
+                    final_redness,
+                    final_squeezing,
+                    final_itching,
+                    risk_score,
+                    risk_level,
+                    recommendations_text
+                )
+            )
+
+            db.commit()
+
+        except Exception as e:
+            print("Database Error:", e)
+
+        start_time = time.time()
 
     return frame, {
         "blink_rate": blink_rate,

@@ -1,7 +1,3 @@
-import cv2
-import base64
-import numpy as np
-from eye import process_frame
 import subprocess
 import time
 from flask import Flask, render_template, request, redirect, Response, jsonify
@@ -278,7 +274,12 @@ def progress():
 
 # New route for browser-sent frames (Phase 1 preparation)
 @app.route("/process_frame", methods=["POST"])
+
 def process_frame_route():
+    import cv2
+    import base64
+    import numpy as np
+    from eye import process_frame
 
     data = request.json["image"]
 
