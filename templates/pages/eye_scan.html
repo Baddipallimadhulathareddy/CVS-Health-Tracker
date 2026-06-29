@@ -456,8 +456,36 @@ Live tracking calibration enabled.
 <div class="button-row">
 
 <button id="startScan" class="start-btn">
-▶ Initiate AI Diagnostics
+    ▶ Initiate AI Diagnostics
 </button>
+
+<script>
+
+document.getElementById("startScan").addEventListener("click", function(){
+
+    navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:false
+    })
+    .then(function(stream){
+
+        const video=document.getElementById("video");
+
+        video.srcObject=stream;
+
+        video.play();
+
+    })
+    .catch(function(err){
+
+        alert("Camera Permission Denied");
+        console.log(err);
+
+    });
+
+});
+
+</script>
 
 
 

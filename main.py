@@ -1,3 +1,7 @@
+import cv2
+import base64
+import numpy as np
+from eye import process_frame
 import subprocess
 import time
 from flask import Flask, render_template, request, redirect, Response, jsonify
@@ -202,6 +206,7 @@ def eye_scan():
     return render_template(
         "first.html",
         page="eye_scan",
+        camera_active=True,
         current_name=current_name,
         current_email=current_email
     )
@@ -273,10 +278,21 @@ def progress():
 
 # New route for browser-sent frames (Phase 1 preparation)
 @app.route("/process_frame", methods=["POST"])
-def process_frame():
-    # Placeholder - will be fully implemented after eye.py refactor
-    # Expect base64 image or file from browser
-    return jsonify({"status": "ready", "message": "Frame processing endpoint ready"})
+def process_frame_route():
+
+    data = request.json["image"]
+
+    encoded = data.split(",")[1]
+
+    image = base64.b64decode(encoded)
+
+    npimg = np.frombuffer(image, np.uint8)
+
+    frame = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
+
+    frame, result = process_frame(frame)
+
+    return jsonify(result)
 
 
 if __name__ == "__main__":
