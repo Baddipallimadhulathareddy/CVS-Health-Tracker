@@ -1,5 +1,4 @@
 import subprocess
-import cv2
 import time
 from flask import Flask, render_template, request, redirect, Response, jsonify
 from database import db, cursor
