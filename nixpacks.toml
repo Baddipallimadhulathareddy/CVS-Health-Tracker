@@ -1,0 +1,5 @@
+[phases.setup]
+nixPkgs = ["python311", "gcc", "zlib"]
+
+[start]
+cmd = "gunicorn main:app"
