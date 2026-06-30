@@ -7,12 +7,12 @@ mp_face_mesh = mp.solutions.face_mesh
 mp_hands = mp.solutions.hands
 LEFT_EYE = [33, 160, 158, 133, 153, 144]
 RIGHT_EYE = [362, 385, 387, 263, 373, 380]
-EAR_THRESHOLD = 0.21
-CONSEC_FRAMES = 2
-REDNESS_NORMAL_LIMIT = 0.10
-REDNESS_CRITICAL_LIMIT = 0.22
+EAR_THRESHOLD = 0.25
+CONSEC_FRAMES = 1
+REDNESS_NORMAL_LIMIT = 0.05
+REDNESS_CRITICAL_LIMIT = 0.12
 BASELINE_FRAMES = 30
-ITCH_DISTANCE = 220
+ITCH_DISTANCE = 280
 # ------------------------------ Variables ------------------------------
 blink_counter = 0
 closed_frames = 0
@@ -22,6 +22,10 @@ blink_timestamps = []
 baseline_ear_values = []
 baseline_ear = None
 saved = False
+
+session_redness = []
+session_squeezing = 0
+session_itching = 0
 # Initialize MediaPipe
 face_mesh = mp_face_mesh.FaceMesh(
     static_image_mode=False,
@@ -56,9 +60,9 @@ def redness_detection(eye_region):
     mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
     mask = cv2.bitwise_or(mask1, mask2)
     red_ratio = cv2.countNonZero(mask) / (mask.shape[0] * mask.shape[1]) if mask.shape[0] * mask.shape[1] > 0 else 0
-    if red_ratio < 0.10:
+    if red_ratio < REDNESS_NORMAL_LIMIT:
         return "Normal"
-    elif red_ratio < 0.22:
+    elif red_ratio < REDNESS_CRITICAL_LIMIT:
         return "Mild"
     else:
         return "Critical"
@@ -73,9 +77,10 @@ def process_frame(frame):
     if "start_time" not in globals():
         start_time = time.time()
     TEST_DURATION = 10
-    session_redness = []
-    session_squeezing = 0
-    session_itching = 0
+
+    global session_redness
+    global session_squeezing
+    global session_itching
 
     frame = cv2.flip(frame, 1)
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -113,7 +118,7 @@ def process_frame(frame):
                 # Continue processing for display
             else:
                 # Blink Detection
-                dynamic_threshold = baseline_ear * 0.78
+                dynamic_threshold = baseline_ear * 0.85
                 if avg_ear < dynamic_threshold:
                     closed_frames += 1
                     if blink_start_time is None:
@@ -147,7 +152,7 @@ def process_frame(frame):
                     blink_status = "Normal"
 
                 # Squeezing Detection
-                if avg_ear < baseline_ear * 0.65:
+                if avg_ear < baseline_ear * 0.80:
                     squeezing_alert = True
                     session_squeezing += 1
 
@@ -410,6 +415,9 @@ def process_frame(frame):
             blink_timestamps.clear()
             baseline_ear_values.clear()
             baseline_ear = None
+            session_redness.clear()
+            session_squeezing = 0
+            session_itching = 0
         except Exception as e:
             print("Database Error:", e)
        
