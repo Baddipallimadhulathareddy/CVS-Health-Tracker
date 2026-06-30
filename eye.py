@@ -398,8 +398,9 @@ def process_frame(frame):
             db.commit()
             print("Database Saved Successfully")
 
-            saved = False
-            start_time = time.time()
+            saved = True
+
+            del start_time
 
             blink_counter = 0
             closed_frames = 0
@@ -411,7 +412,7 @@ def process_frame(frame):
         except Exception as e:
             print("Database Error:", e)
        
-        start_time = time.time()
+        
         
 
     return frame, {
