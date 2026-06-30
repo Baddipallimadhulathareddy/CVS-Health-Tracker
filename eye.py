@@ -107,6 +107,9 @@ def process_frame(frame):
             left_ear = eye_aspect_ratio(face_landmarks.landmark, LEFT_EYE)
             right_ear = eye_aspect_ratio(face_landmarks.landmark, RIGHT_EYE)
             avg_ear = (left_ear + right_ear) / 2.0
+            print(
+    f"EAR={avg_ear:.3f}  Baseline={baseline_ear}  Closed={closed_frames}  Blinks={blink_counter}"
+)
 
             # Baseline EAR Setup
             if baseline_ear is None:
@@ -119,6 +122,7 @@ def process_frame(frame):
             else:
                 # Blink Detection
                 dynamic_threshold = baseline_ear * 0.78
+                print("Threshold =", round(dynamic_threshold, 3))
                 if avg_ear < dynamic_threshold:
                     closed_frames += 1
                     if blink_start_time is None:
