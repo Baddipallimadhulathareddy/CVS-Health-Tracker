@@ -419,7 +419,7 @@ const canvas = document.getElementById("canvas");
 let stream = null;
 let interval = null;
 
-
+let scanStopped = false;
 
 async function startScan(){
 
@@ -444,17 +444,20 @@ async function startScan(){
 
     console.log("10 Seconds Finished");
 
-    // Send one final frame after 30 seconds
+    scanStopped = true;
+
+    clearInterval(interval);
+
     await sendFrame();
 
-    stopScan();
+    await stopScan();
 
 }, 10000);
 
 }
 
 async function sendFrame(){
-
+    if (scanStopped) return;
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
@@ -484,7 +487,7 @@ async function sendFrame(){
 
 async function stopScan(){
 
-    clearInterval(interval);
+   
 
     // Wait a little so the server finishes saving
     await new Promise(resolve => setTimeout(resolve, 1500));
