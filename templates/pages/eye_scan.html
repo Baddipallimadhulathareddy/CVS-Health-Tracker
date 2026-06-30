@@ -412,19 +412,71 @@ style="display:none;">
 </canvas>
 
 <script>
+
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 
-navigator.mediaDevices.getUserMedia({
-    video: true,
-    audio: false
-})
-.then(stream => {
+let stream = null;
+let interval = null;
+
+document.getElementById("startScan").addEventListener("click", startScan);
+
+async function startScan(){
+
+    stream = await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:false
+    });
+
     video.srcObject = stream;
-})
-.catch(err => {
-    console.error("Camera access denied:", err);
-});
+
+    video.play();
+
+    interval = setInterval(sendFrame,500);
+
+    setTimeout(stopScan,30000);
+
+}
+
+async function sendFrame(){
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(video,0,0);
+
+    const image = canvas.toDataURL("image/jpeg");
+
+    await fetch("/process_frame",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            image:image
+        })
+
+    });
+
+}
+
+function stopScan(){
+
+    clearInterval(interval);
+
+    stream.getTracks().forEach(track=>track.stop());
+
+    alert("Analysis Completed");
+
+    window.location="/dashboard";
+
+}
+
 </script>
 
 {% else %}
@@ -461,29 +513,7 @@ Live tracking calibration enabled.
 
 <script>
 
-document.getElementById("startScan").addEventListener("click", function(){
 
-    navigator.mediaDevices.getUserMedia({
-        video:true,
-        audio:false
-    })
-    .then(function(stream){
-
-        const video=document.getElementById("video");
-
-        video.srcObject=stream;
-
-        video.play();
-
-    })
-    .catch(function(err){
-
-        alert("Camera Permission Denied");
-        console.log(err);
-
-    });
-
-});
 
 </script>
 

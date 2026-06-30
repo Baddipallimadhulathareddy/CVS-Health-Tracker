@@ -60,7 +60,7 @@ def login():
         FROM users
         WHERE email=%s AND password=%s
         """
-
+        db.reconnect(attempts=3, delay=1)
         cursor.execute(
             query,
             (
