@@ -7,12 +7,12 @@ mp_face_mesh = mp.solutions.face_mesh
 mp_hands = mp.solutions.hands
 LEFT_EYE = [33, 160, 158, 133, 153, 144]
 RIGHT_EYE = [362, 385, 387, 263, 373, 380]
-EAR_THRESHOLD = 0.25
-CONSEC_FRAMES = 1
-REDNESS_NORMAL_LIMIT = 0.05
-REDNESS_CRITICAL_LIMIT = 0.12
+EAR_THRESHOLD = 0.21
+CONSEC_FRAMES = 2
+REDNESS_NORMAL_LIMIT = 0.10
+REDNESS_CRITICAL_LIMIT = 0.22
 BASELINE_FRAMES = 30
-ITCH_DISTANCE = 280
+ITCH_DISTANCE = 220
 # ------------------------------ Variables ------------------------------
 blink_counter = 0
 closed_frames = 0
@@ -118,7 +118,7 @@ def process_frame(frame):
                 # Continue processing for display
             else:
                 # Blink Detection
-                dynamic_threshold = baseline_ear * 0.85
+                dynamic_threshold = baseline_ear * 0.78
                 if avg_ear < dynamic_threshold:
                     closed_frames += 1
                     if blink_start_time is None:
@@ -152,7 +152,7 @@ def process_frame(frame):
                     blink_status = "Normal"
 
                 # Squeezing Detection
-                if avg_ear < baseline_ear * 0.80:
+                if avg_ear < baseline_ear * 0.65:
                     squeezing_alert = True
                     session_squeezing += 1
 
