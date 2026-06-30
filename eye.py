@@ -400,9 +400,8 @@ def process_frame(frame):
             print("Database Saved Successfully")
 
             saved = True
-
             del start_time
-            
+            saved = False
             blink_counter = 0
             closed_frames = 0
             blink_start_time = None
