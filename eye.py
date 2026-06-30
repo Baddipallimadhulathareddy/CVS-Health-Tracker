@@ -72,7 +72,6 @@ def process_frame(frame):
 
     if "start_time" not in globals():
         start_time = time.time()
-        saved = False
     TEST_DURATION = 30
     session_redness = []
     session_squeezing = 0
@@ -396,9 +395,11 @@ def process_frame(frame):
             )
 
             db.commit()
+            cursor.execute("SELECT COUNT(*) FROM reports")
+            print("TOTAL REPORTS:", cursor.fetchone()[0])
             print("Database Saved Successfully")
 
-            saved = True
+            saved = False
 
             del start_time
 
