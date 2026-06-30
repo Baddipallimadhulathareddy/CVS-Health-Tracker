@@ -72,7 +72,7 @@ def process_frame(frame):
 
     if "start_time" not in globals():
         start_time = time.time()
-    TEST_DURATION = 30
+    TEST_DURATION = 10
     session_redness = []
     session_squeezing = 0
     session_itching = 0
@@ -357,6 +357,7 @@ def process_frame(frame):
 
     elapsed_time = time.time() - start_time
     print("Elapsed:", elapsed_time)
+    print("Elapsed Check:", elapsed_time)
     if elapsed_time >= TEST_DURATION and not saved:
 
         try:
