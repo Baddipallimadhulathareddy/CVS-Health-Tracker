@@ -265,6 +265,7 @@ def process_frame(frame):
 
     # Time Left
     elapsed_time = time.time() - start_time
+    print("Elapsed:", elapsed_time)
     remaining = max(0, int(TEST_DURATION - elapsed_time))
     cv2.putText(
         frame,
@@ -356,7 +357,7 @@ def process_frame(frame):
         # ---------------- Database Save ----------------
 
     elapsed_time = time.time() - start_time
-
+    print("Elapsed:", elapsed_time)
     if elapsed_time >= TEST_DURATION and not saved:
 
         try:
@@ -399,7 +400,7 @@ def process_frame(frame):
             print("Database Saved Successfully")
         except Exception as e:
             print("Database Error:", e)
-
+       
         start_time = time.time()
         
 
