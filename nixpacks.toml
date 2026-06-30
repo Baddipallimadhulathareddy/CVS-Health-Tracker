@@ -2,14 +2,16 @@
 nixPkgs = [
   "python313",
   "libGL",
-  "libGLU",
   "glib",
-  "libxkbcommon",
   "xorg.libX11",
   "xorg.libXext",
-  "xorg.libSM",
-  "xorg.libICE",
-  "xorg.libxcb"
+  "xorg.libXrender",
+  "xorg.libXfixes",
+  "xorg.libXi",
+  "xorg.libxcb",
+  "xorg.libXau",
+  "xorg.libXdmcp",
+  "libxkbcommon"
 ]
 
 [start]

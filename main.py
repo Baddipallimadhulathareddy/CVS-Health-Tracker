@@ -277,6 +277,8 @@ def progress():
 
 def process_frame_route():
     import cv2
+
+    print("OpenCV Loaded Successfully")
     import base64
     import numpy as np
     from eye import process_frame
@@ -291,9 +293,17 @@ def process_frame_route():
 
     frame = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
 
-    frame, result = process_frame(frame)
+    try:
 
-    return jsonify(result)
+        frame, result = process_frame(frame)
+
+        return jsonify(result)
+
+    except Exception as e:
+
+        print(e)
+
+        return jsonify({"error": str(e)})
 
 
 if __name__ == "__main__":
