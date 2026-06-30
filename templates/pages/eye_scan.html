@@ -435,7 +435,7 @@ async function startScan(){
     interval = setInterval(async () => {
     console.log("Sending Frame...");
     await sendFrame();
-}, 500);
+}, 100);
     setInterval(() => {
         console.log("Frame sent:", new Date().toLocaleTimeString());
     }, 500);
