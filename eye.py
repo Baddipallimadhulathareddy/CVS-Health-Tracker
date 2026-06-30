@@ -396,8 +396,18 @@ def process_frame(frame):
             )
 
             db.commit()
-            saved = True
             print("Database Saved Successfully")
+
+            saved = False
+            start_time = time.time()
+
+            blink_counter = 0
+            closed_frames = 0
+            blink_start_time = None
+            blink_durations.clear()
+            blink_timestamps.clear()
+            baseline_ear_values.clear()
+            baseline_ear = None
         except Exception as e:
             print("Database Error:", e)
        
