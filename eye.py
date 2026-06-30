@@ -11,7 +11,7 @@ EAR_THRESHOLD = 0.21
 CONSEC_FRAMES = 2
 REDNESS_NORMAL_LIMIT = 0.10
 REDNESS_CRITICAL_LIMIT = 0.22
-BASELINE_FRAMES = 30
+BASELINE_FRAMES = 10
 ITCH_DISTANCE = 220
 # ------------------------------ Variables ------------------------------
 blink_counter = 0
@@ -116,6 +116,7 @@ def process_frame(frame):
                 baseline_ear_values.append(avg_ear)
                 if len(baseline_ear_values) >= BASELINE_FRAMES:
                     baseline_ear = np.mean(baseline_ear_values)
+                    print("Baseline Ready:", baseline_ear)
                 cv2.putText(frame, "Calibrating baseline EAR...", (30, 40),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
                 # Continue processing for display
