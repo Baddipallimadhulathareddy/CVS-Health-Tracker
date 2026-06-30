@@ -276,6 +276,7 @@ def progress():
 @app.route("/process_frame", methods=["POST"])
 
 def process_frame_route():
+    print("PROCESS_FRAME ROUTE CALLED")
     import cv2
 
     print("OpenCV Loaded Successfully")
