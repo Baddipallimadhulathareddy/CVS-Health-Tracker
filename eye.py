@@ -393,16 +393,16 @@ def process_frame(frame):
                     recommendations_text
                 )
             )
-
+            print("Rows inserted:", cursor.rowcount)
             db.commit()
             cursor.execute("SELECT COUNT(*) FROM reports")
             print("TOTAL REPORTS:", cursor.fetchone()[0])
             print("Database Saved Successfully")
 
-            saved = False
+            saved = True
 
             del start_time
-
+            
             blink_counter = 0
             closed_frames = 0
             blink_start_time = None
