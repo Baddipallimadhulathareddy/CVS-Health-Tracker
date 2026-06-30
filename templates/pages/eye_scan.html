@@ -418,6 +418,8 @@ const canvas = document.getElementById("canvas");
 
 let stream = null;
 let interval = null;
+let logInterval = null;
+
 
 let scanStopped = false;
 
@@ -435,10 +437,10 @@ async function startScan(){
     interval = setInterval(async () => {
     console.log("Sending Frame...");
     await sendFrame();
-}, 100);
-    setInterval(() => {
-        console.log("Frame sent:", new Date().toLocaleTimeString());
-    }, 500);
+}, 250);
+    logInterval = setInterval(() => {
+    console.log("Frame sent:", new Date().toLocaleTimeString());
+}, 500);
 
     setTimeout(async () => {
 
@@ -487,7 +489,9 @@ async function sendFrame(){
 
 async function stopScan(){
 
-   
+   clearInterval(interval);
+    clearInterval(logInterval);
+    scanStopped = true;
 
     // Wait a little so the server finishes saving
     await new Promise(resolve => setTimeout(resolve, 1500));
