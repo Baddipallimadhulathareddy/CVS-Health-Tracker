@@ -434,7 +434,13 @@ async function startScan(){
 
     interval = setInterval(sendFrame,500);
 
-    setTimeout(stopScan,30000);
+    setTimeout(async () => {
+
+    await sendFrame();
+
+    stopScan();
+
+}, 30500);
 
 }
 

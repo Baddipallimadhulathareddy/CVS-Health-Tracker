@@ -70,6 +70,7 @@ def process_frame(frame):
 
     if "start_time" not in globals():
         start_time = time.time()
+        saved = False
     TEST_DURATION = 30
     session_redness = []
     session_squeezing = 0
@@ -354,7 +355,7 @@ def process_frame(frame):
 
     elapsed_time = time.time() - start_time
 
-    if elapsed_time >= TEST_DURATION:
+    if elapsed_time >= TEST_DURATION and "saved" not in globals():
 
         try:
             print("Reached Database Save")
@@ -392,11 +393,14 @@ def process_frame(frame):
             )
 
             db.commit()
+            global saved
+            saved = True
             print("Database Saved Successfully")
         except Exception as e:
             print("Database Error:", e)
 
         start_time = time.time()
+        saved = False
 
     return frame, {
         "blink_rate": blink_rate,
