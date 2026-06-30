@@ -296,7 +296,11 @@ def process_frame_route():
 
     try:
 
+        print("Before process_frame")
+
         frame, result = process_frame(frame)
+
+        print("After process_frame")
 
         return jsonify(result)
 
