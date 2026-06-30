@@ -440,9 +440,12 @@ async function startScan(){
         console.log("Frame sent:", new Date().toLocaleTimeString());
     }, 500);
 
-    setTimeout(() => {
+    setTimeout(async () => {
 
     console.log("30 Seconds Finished");
+
+    // Send one final frame after 30 seconds
+    await sendFrame();
 
     stopScan();
 
@@ -479,17 +482,21 @@ async function sendFrame(){
 
 }
 
-function stopScan(){
+async function stopScan(){
 
     clearInterval(interval);
 
-    stream.getTracks().forEach(track=>track.stop());
+    // Wait a little so the server finishes saving
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    stream.getTracks().forEach(track => track.stop());
 
     alert("Analysis Completed");
 
-    window.location="/dashboard";
-
+    window.location = "/dashboard";
 }
+
+   
 
 </script>
 
