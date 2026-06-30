@@ -357,7 +357,7 @@ def process_frame(frame):
     if elapsed_time >= TEST_DURATION:
 
         try:
-
+            print("Reached Database Save")
             from database import db, cursor
 
             with open("current_user.txt", "r") as f:
@@ -392,7 +392,7 @@ def process_frame(frame):
             )
 
             db.commit()
-
+            print("Database Saved Successfully")
         except Exception as e:
             print("Database Error:", e)
 
