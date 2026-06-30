@@ -72,7 +72,7 @@ def process_frame(frame):
 
     if "start_time" not in globals():
         start_time = time.time()
-    TEST_DURATION = 30
+    TEST_DURATION = 10
     session_redness = []
     session_squeezing = 0
     session_itching = 0
