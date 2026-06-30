@@ -433,6 +433,9 @@ async function startScan(){
     video.play();
 
     interval = setInterval(sendFrame,500);
+    setInterval(() => {
+        console.log("Frame sent:", new Date().toLocaleTimeString());
+    }, 500);
 
     setTimeout(async () => {
 
