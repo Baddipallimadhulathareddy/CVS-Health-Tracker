@@ -21,6 +21,7 @@ blink_durations = []
 blink_timestamps = []
 baseline_ear_values = []
 baseline_ear = None
+saved = False
 # Initialize MediaPipe
 face_mesh = mp_face_mesh.FaceMesh(
     static_image_mode=False,
@@ -64,6 +65,7 @@ def redness_detection(eye_region):
 
 # ------------------------------ Main Processing Function ------------------------------
 def process_frame(frame):
+    global saved
     global blink_counter, closed_frames, blink_start_time, blink_durations, blink_timestamps, baseline_ear_values, baseline_ear
 
     global start_time
@@ -355,7 +357,7 @@ def process_frame(frame):
 
     elapsed_time = time.time() - start_time
 
-    if elapsed_time >= TEST_DURATION and "saved" not in globals():
+    if elapsed_time >= TEST_DURATION and not saved:
 
         try:
             print("Reached Database Save")
@@ -393,14 +395,13 @@ def process_frame(frame):
             )
 
             db.commit()
-            global saved
             saved = True
             print("Database Saved Successfully")
         except Exception as e:
             print("Database Error:", e)
 
         start_time = time.time()
-        saved = False
+        
 
     return frame, {
         "blink_rate": blink_rate,
