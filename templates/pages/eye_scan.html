@@ -432,18 +432,21 @@ async function startScan(){
 
     video.play();
 
-    interval = setInterval(sendFrame,500);
+    interval = setInterval(async () => {
+    console.log("Sending Frame...");
+    await sendFrame();
+}, 500);
     setInterval(() => {
         console.log("Frame sent:", new Date().toLocaleTimeString());
     }, 500);
 
-    setTimeout(async () => {
+    setTimeout(() => {
 
-    await sendFrame();
+    console.log("30 Seconds Finished");
 
     stopScan();
 
-}, 30500);
+}, 30000);
 
 }
 
@@ -458,19 +461,21 @@ async function sendFrame(){
 
     const image = canvas.toDataURL("image/jpeg");
 
-    await fetch("/process_frame",{
-
-        method:"POST",
-
-        headers:{
-            "Content-Type":"application/json"
+    const response = await fetch("/process_frame", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
         },
-
-        body:JSON.stringify({
-            image:image
+        body: JSON.stringify({
+            image: image
         })
-
     });
+
+    console.log("Status:", response.status);
+
+    const data = await response.json();
+
+    console.log(data);
 
 }
 
