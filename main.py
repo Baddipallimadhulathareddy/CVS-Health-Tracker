@@ -60,7 +60,7 @@ def login():
         FROM users
         WHERE email=%s AND password=%s
         """
-        db.reconnect(attempts=3, delay=1)
+        
         cursor.execute(
             query,
             (
@@ -97,7 +97,6 @@ def login():
 def dashboard():
     with open("current_user.txt", "r") as f:
         user_id = int(f.read())
-    db.reconnect(attempts=3, delay=1)
 
     query = """
 SELECT
@@ -159,7 +158,6 @@ ORDER BY report_date DESC
 def history():
     with open("current_user.txt","r") as f:
         user_id = int(f.read())
-    db.reconnect(attempts=3, delay=1)
 
     query = """
     SELECT
@@ -213,7 +211,6 @@ def progress():
     with open("current_user.txt","r") as f:
         user_id = int(f.read())
 
-    db.reconnect(attempts=3, delay=1)
 
     cursor.execute("""
     SELECT

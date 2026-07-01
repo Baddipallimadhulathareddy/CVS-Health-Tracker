@@ -12,6 +12,5 @@ db = mysql.connector.connect(
     autocommit=True
 )
 
-cursor = db.cursor()
-
+cursor = db.cursor(buffered=True)
 print("Database Connected")
