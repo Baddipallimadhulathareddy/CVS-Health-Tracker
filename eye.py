@@ -107,9 +107,9 @@ def process_frame(frame):
             left_ear = eye_aspect_ratio(face_landmarks.landmark, LEFT_EYE)
             right_ear = eye_aspect_ratio(face_landmarks.landmark, RIGHT_EYE)
             avg_ear = (left_ear + right_ear) / 2.0
-            print(
-    f"EAR={avg_ear:.3f}  Baseline={baseline_ear}  Closed={closed_frames}  Blinks={blink_counter}"
-)
+#             print(
+#     f"EAR={avg_ear:.3f}  Baseline={baseline_ear}  Closed={closed_frames}  Blinks={blink_counter}"
+# )
 
             # Baseline EAR Setup
             if baseline_ear is None:
@@ -123,14 +123,14 @@ def process_frame(frame):
             else:
                 # Blink Detection
                 dynamic_threshold = baseline_ear * 0.82
-                print("Threshold =", round(dynamic_threshold, 3))
+                # print("Threshold =", round(dynamic_threshold, 3))
                 if avg_ear < dynamic_threshold:
-                    print("Eye Closed")
+                    # print("Eye Closed")
                     closed_frames += 1
                     if blink_start_time is None:
                         blink_start_time = current_time
                 else:
-                    print("Eye Open")
+                    # print("Eye Open")
                     if closed_frames >= CONSEC_FRAMES:
                         blink_counter += 1
                         print("BLINK DETECTED ->", blink_counter)
@@ -278,7 +278,7 @@ def process_frame(frame):
 
     # Time Left
     elapsed_time = time.time() - start_time
-    print("Elapsed:", elapsed_time)
+    # print("Elapsed:", elapsed_time)
     remaining = max(0, int(TEST_DURATION - elapsed_time))
     cv2.putText(
         frame,
@@ -370,8 +370,8 @@ def process_frame(frame):
         # ---------------- Database Save ----------------
 
     elapsed_time = time.time() - start_time
-    print("Elapsed:", elapsed_time)
-    print("Elapsed Check:", elapsed_time)
+    # print("Elapsed:", elapsed_time)
+    # print("Elapsed Check:", elapsed_time)
     if elapsed_time >= TEST_DURATION and not saved:
 
         try:
@@ -422,7 +422,7 @@ def process_frame(frame):
 
             saved = True
             del start_time
-            saved = False
+            
             blink_counter = 0
             closed_frames = 0
             blink_start_time = None
