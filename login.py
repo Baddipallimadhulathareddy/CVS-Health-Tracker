@@ -30,8 +30,7 @@ if user:
     with open("current_email.txt","w") as f:
         f.write(email)
     
-    with open("current_user.txt", "w") as f:
-        f.write(str(user_id))
+    
 
     with open("login_status.txt", "w") as f:
         f.write("success")
