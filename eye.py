@@ -395,6 +395,11 @@ def process_frame(frame):
             )
             VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
             """
+            print("========== FINAL REPORT ==========")
+            print("Blink Counter :", blink_counter)
+            print("Blink Rate    :", blink_rate)
+            print("Risk Score    :", risk_score)
+            print("==================================")
 
             cursor.execute(
                 query,
