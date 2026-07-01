@@ -8,7 +8,7 @@ mp_hands = mp.solutions.hands
 LEFT_EYE = [33, 160, 158, 133, 153, 144]
 RIGHT_EYE = [362, 385, 387, 263, 373, 380]
 EAR_THRESHOLD = 0.21
-CONSEC_FRAMES = 2
+CONSEC_FRAMES = 1
 REDNESS_NORMAL_LIMIT = 0.10
 REDNESS_CRITICAL_LIMIT = 0.22
 BASELINE_FRAMES = 10
@@ -122,15 +122,19 @@ def process_frame(frame):
                 # Continue processing for display
             else:
                 # Blink Detection
-                dynamic_threshold = baseline_ear * 0.78
+                dynamic_threshold = baseline_ear * 0.82
                 print("Threshold =", round(dynamic_threshold, 3))
                 if avg_ear < dynamic_threshold:
+                    print("Eye Closed")
                     closed_frames += 1
                     if blink_start_time is None:
                         blink_start_time = current_time
                 else:
+                    print("Eye Open")
                     if closed_frames >= CONSEC_FRAMES:
                         blink_counter += 1
+                        print("BLINK DETECTED ->", blink_counter)
+
                         if blink_start_time:
                             blink_duration = current_time - blink_start_time
                             blink_durations.append(blink_duration)
