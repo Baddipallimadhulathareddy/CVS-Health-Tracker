@@ -380,6 +380,7 @@ def process_frame(frame):
 
             with open("current_user.txt", "r") as f:
                 user_id = int(f.read())
+            print("Current User ID =", user_id)
 
             query = """
             INSERT INTO reports(
