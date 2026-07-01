@@ -22,6 +22,7 @@ blink_timestamps = []
 baseline_ear_values = []
 baseline_ear = None
 saved = False
+scan_active = False
 
 session_redness = []
 session_squeezing = 0
@@ -69,18 +70,36 @@ def redness_detection(eye_region):
 
 # ------------------------------ Main Processing Function ------------------------------
 def process_frame(frame):
-    global saved
+    global saved, scan_active
     global blink_counter, closed_frames, blink_start_time, blink_durations, blink_timestamps, baseline_ear_values, baseline_ear
 
     global start_time
 
-    if "start_time" not in globals():
-        start_time = time.time()
-    TEST_DURATION = 10
-
     global session_redness
     global session_squeezing
     global session_itching
+
+    if not scan_active:
+        scan_active = True
+        saved = False
+        start_time = time.time()
+
+        blink_counter = 0
+        closed_frames = 0
+        blink_start_time = None
+
+        blink_durations.clear()
+        blink_timestamps.clear()
+
+        baseline_ear_values.clear()
+        baseline_ear = None
+
+        session_redness.clear()
+        session_squeezing = 0
+        session_itching = 0
+    TEST_DURATION = 10
+
+
 
     frame = cv2.flip(frame, 1)
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -395,6 +414,8 @@ def process_frame(frame):
             )
             VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
             """
+            elapsed_minutes = max(TEST_DURATION / 60, 1/60)
+            blink_rate = int(blink_counter / elapsed_minutes)
             print("========== FINAL REPORT ==========")
             print("Blink Counter :", blink_counter)
             print("Blink Rate    :", blink_rate)
@@ -421,7 +442,7 @@ def process_frame(frame):
             print("Database Saved Successfully")
 
             saved = True
-            del start_time
+            scan_active = False
             
             blink_counter = 0
             closed_frames = 0
